@@ -1,5 +1,4 @@
 import {
-  ArcRotateCamera,
   Engine,
   FreeCamera,
   HemisphericLight,
@@ -16,21 +15,14 @@ export default class BasicScene {
     this.scene = new Scene(this.engine);
     this.defineCamera();
     this.initLight();
-    this.initBox();
+    this.initBall();
     this.engine.runRenderLoop(() => {
       this.scene.render();
     });
   }
 
   defineCamera() {
-    const camera = new ArcRotateCamera(
-      "cam",
-      -Math.PI / 2,
-      Math.PI / 2,
-      10,
-      new Vector3(0, 0, 0),
-      this.scene
-    );
+    const camera = new FreeCamera("cam", new Vector3(0, 1, -5), this.scene);
     camera.attachControl(this.scene);
   }
 
@@ -40,11 +32,12 @@ export default class BasicScene {
       new Vector3(0, 1, 0),
       this.scene
     );
-    // light.intensity = 0.5;
+    light.intensity = 0.8;
   }
 
-  initBox() {
-    const ball = MeshBuilder.CreateBox("Box", {}, this.scene);
+  initBall() {
+    const ball = MeshBuilder.CreateSphere("ball", { diameter: 1 }, this.scene);
+    MeshBuilder.CreateGround("ground", { width: 10, height: 10 }, this.scene);
     ball.position = new Vector3(0, 1, 0);
   }
 }
