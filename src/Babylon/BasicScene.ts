@@ -47,10 +47,10 @@ export default class BasicScene {
     // light.specular = new Color3(0, 1, 0);
     // const light = new DirectionalLight(
     //   "direct",
-    //   new Vector3(0, 2, 0),
+    //   new Vector3(-1, -2, 0),
     //   this.scene
     // );
-    // const light = new PointLight("point", new Vector3(0, 1, 1), this.scene);
+    // const light = new PointLight("point", new Vector3(1, 1, -1), this.scene);
     // const splot = new SpotLight(
     //   "spot",
     //   new Vector3(0, 2, 0),
