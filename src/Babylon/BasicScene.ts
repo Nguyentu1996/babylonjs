@@ -5,6 +5,8 @@ import {
   HemisphericLight,
   MeshBuilder,
   Scene,
+  StandardMaterial,
+  Texture,
   Vector3,
 } from "@babylonjs/core";
 
@@ -28,7 +30,7 @@ export default class BasicScene {
       -Math.PI / 2,
       Math.PI / 2,
       10,
-      new Vector3(0, 0, 0),
+      new Vector3(0, 1, 0),
       this.scene
     );
     camera.attachControl(this.scene);
@@ -44,7 +46,29 @@ export default class BasicScene {
   }
 
   initBox() {
-    const ball = MeshBuilder.CreateBox("Box", {}, this.scene);
-    ball.position = new Vector3(0, 1, 0);
+    const ball = MeshBuilder.CreateGround(
+      "Box",
+      { width: 10, height: 10 },
+      this.scene
+    );
+    const standardMaterial = new StandardMaterial("material", this.scene);
+    standardMaterial.diffuseTexture = new Texture(
+      "./textures/wood_diff_4k.png",
+      this.scene
+    );
+    // standardMaterial.bumpTexture = new Texture(
+    //   "./textures/snow_02_nor_gl_4k.jpeg",
+    //   this.scene
+    // );
+    // standardMaterial.specularTexture = new Texture(
+    //   "./textures/snow_02_spec_4k.jpeg",
+    //   this.scene
+    // );
+    // standardMaterial.ambientTexture = new Texture(
+    //   "./textures/snow_02_ao_4k.jpeg",
+    //   this.scene
+    // );
+    ball.material = standardMaterial;
+    // ball.position = new Vector3(0, 1, 0);
   }
 }
