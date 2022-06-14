@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
+import { BasicScene } from "@/Babylon/BasicScene";
 import Vue from "vue";
-import BasicScene from "@/Babylon/BasicScene";
 
 export default Vue.extend({
   name: "HomeView",
