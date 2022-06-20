@@ -101,19 +101,19 @@ export class BasicScene {
     const art = MeshBuilder.CreateBox("art", {
       width: 1.325,
       height: 2,
-      depth: 0.03,
+      depth: 0.02,
     });
     const artMat = new StandardMaterial("artMat", this.scene);
-    artMat.diffuseColor = Color3.Black();
+    // artMat.diffuseColor = Color3.Black();
     artMat.emissiveColor = Color3.White();
-    artMat.ambientColor = Color3.White();
+    // artMat.ambientColor = Color3.White();
     art.material = artMat;
     const image = MeshBuilder.CreatePlane("img", { width: 1.325, height: 2 });
     const imgMat = new StandardMaterial("imgMat", this.scene);
     const imgTexture = new Texture("./texture/art1.jpeg", this.scene);
     imgMat.diffuseTexture = imgTexture;
     image.material = imgMat;
-    image.translate(new Vector3(0, 0, -0.03), 1);
+    image.translate(new Vector3(0, 0, -0.02), 1);
     const group = new TransformNode(`artwork`);
     image.parent = group;
     art.parent = group;
