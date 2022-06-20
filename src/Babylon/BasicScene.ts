@@ -28,6 +28,8 @@ export class BasicScene {
   createScene(): Scene {
     const scene = new Scene(this.engine);
     // scene.clearColor = new Color4(255, 255, 255, 1);
+    scene.ambientColor = new Color3(1, 1, 1);
+
     scene.gravity = new Vector3(0, -0.9, 0);
     const camera = new UniversalCamera(
       "camera",
@@ -45,7 +47,7 @@ export class BasicScene {
       new Vector3(0, 1, 0),
       this.scene
     );
-    hemiLight.diffuse = new Color3(15, 15, 15);
+    // hemiLight.diffuse = new Color3(15, 15, 15);
     // hemiLight.intensity = 0.7;
     return scene;
   }
@@ -73,6 +75,7 @@ export class BasicScene {
     const wallMat = new StandardMaterial("wallMat", this.scene);
     const wallTexture = new Texture("./texture/Wall.jpg");
     wallMat.diffuseTexture = wallTexture;
+    wallMat.ambientColor = new Color3(15, 15, 15);
     const wall = MeshBuilder.CreatePlane(
       "wall",
       { width: 20, height: 10 },
@@ -111,6 +114,7 @@ export class BasicScene {
     const image = MeshBuilder.CreatePlane("img", { width: 1.325, height: 2 });
     const imgMat = new StandardMaterial("imgMat", this.scene);
     const imgTexture = new Texture("./texture/art1.jpeg", this.scene);
+    imgMat.ambientColor = new Color3(1, 1, 1);
     imgMat.diffuseTexture = imgTexture;
     image.material = imgMat;
     image.translate(new Vector3(0, 0, -0.02), 1);
