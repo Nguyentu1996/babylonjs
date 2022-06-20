@@ -1,9 +1,11 @@
 import {
   ArcRotateCamera,
+  Color3,
   Engine,
   FreeCamera,
   HemisphericLight,
   MeshBuilder,
+  PointLight,
   Scene,
   StandardMaterial,
   Texture,
@@ -28,9 +30,9 @@ export default class BasicScene {
     const camera = new ArcRotateCamera(
       "cam",
       -Math.PI / 2,
-      Math.PI / 2,
-      10,
-      new Vector3(0, 1, 0),
+      Math.PI / 3,
+      5,
+      new Vector3(0, 0, 0),
       this.scene
     );
     camera.attachControl(this.scene);
@@ -42,20 +44,23 @@ export default class BasicScene {
       new Vector3(0, 1, 0),
       this.scene
     );
-    // light.intensity = 0.5;
   }
 
   initBox() {
-    const ball = MeshBuilder.CreateGround(
-      "Box",
+    const ground = MeshBuilder.CreateGround(
+      "Ground",
       { width: 10, height: 10 },
       this.scene
     );
+
+    const ball = MeshBuilder.CreateSphere("Ball", { diameter: 1 }, this.scene);
+    ball.position.y = 1;
     const standardMaterial = new StandardMaterial("material", this.scene);
     standardMaterial.diffuseTexture = new Texture(
-      "./textures/wood_diff_4k.png",
+      "./textures/metal_plate_diff_4k.png",
       this.scene
     );
+    standardMaterial.emissiveColor = new Color3(0.2, 0.2, 0.2);
     // standardMaterial.bumpTexture = new Texture(
     //   "./textures/snow_02_nor_gl_4k.jpeg",
     //   this.scene
