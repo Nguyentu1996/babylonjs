@@ -11,6 +11,8 @@ import {
   Color3,
   TransformNode,
   Color4,
+  Axis,
+  FreeCamera,
 } from "@babylonjs/core";
 
 export class BasicScene {
@@ -29,18 +31,24 @@ export class BasicScene {
     const scene = new Scene(this.engine);
     // scene.clearColor = new Color4(255, 255, 255, 1);
     scene.ambientColor = new Color3(1, 1, 1);
+    const framesPerSecond = 60;
+    const earthGravity = -9.81;
 
-    scene.gravity = new Vector3(0, -0.9, 0);
-    const camera = new UniversalCamera(
-      "camera",
-      new Vector3(0, 2, 1),
-      this.scene
-    );
+    scene.gravity = new Vector3(0, earthGravity / framesPerSecond, 0);
+    scene.collisionsEnabled = true;
+    const camera = new FreeCamera("camera", new Vector3(0, 2, 1), this.scene);
+
     camera.minZ = 0;
     camera.speed = 0.25;
+    camera.angularSensibility = 4000;
+
     camera.applyGravity = true;
     camera.checkCollisions = true;
-
+    camera.keysDown.push(83);
+    camera.keysUp.push(87);
+    camera.keysLeft.push(65);
+    camera.keysRight.push(68);
+    camera.ellipsoid = new Vector3(1, 1, 1);
     camera.attachControl();
     const hemiLight = new HemisphericLight(
       "hemiLight",
@@ -117,10 +125,8 @@ export class BasicScene {
     imgMat.ambientColor = new Color3(1, 1, 1);
     imgMat.diffuseTexture = imgTexture;
     image.material = imgMat;
-    image.translate(new Vector3(0, 0, -0.02), 1);
-    const group = new TransformNode(`artwork`);
-    image.parent = group;
-    art.parent = group;
-    group.position = new Vector3(0, 2, 10);
+    image.translate(Axis.Z, -0.02);
+    image.parent = art;
+    art.position = new Vector3(0, 2, 10);
   }
 }
