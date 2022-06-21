@@ -1,12 +1,13 @@
 import {
   Color3,
   Color4,
+  DirectionalLight,
   Engine,
   FreeCamera,
   HemisphericLight,
   MeshBuilder,
   Scene,
-  StandardMaterial,
+  Animation,
   Vector3,
 } from "@babylonjs/core";
 
@@ -16,11 +17,10 @@ export default class BasicScene {
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(canvas);
     this.scene = new Scene(this.engine);
-    this.scene.clearColor = new Color4(0.5, 0.5, 0.5);
 
     this.defineCamera();
     this.initLight();
-    this.initPilot();
+    this.initBox();
     this.engine.runRenderLoop(() => {
       this.scene.render();
     });
@@ -37,35 +37,42 @@ export default class BasicScene {
       new Vector3(0, 1, 0),
       this.scene
     );
+    const light2 = new DirectionalLight(
+      "DirectionalLight",
+      new Vector3(0, -1, 1),
+      this.scene
+    );
+    light.intensity = 0.75;
+    light2.intensity = 0.5;
   }
 
-  initPilot() {
-    const pilot = MeshBuilder.CreateCylinder(
-      "pilot",
-      {
-        height: 0.75,
-        diameterTop: 0.2,
-        diameterBottom: 0.5,
-        tessellation: 6,
-        subdivisions: 1,
-      },
-      this.scene
+  initBox() {
+    const box = MeshBuilder.CreateBox("box", {}, this.scene);
+    const frameRate = 10; // The frames per second of the animation
+    const xSlide = new Animation(
+      "xSlide",
+      "position.x",
+      frameRate,
+      Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CYCLE
     );
-    const greyMat = new StandardMaterial("grey", this.scene);
-    greyMat.emissiveColor = new Color3(0.2, 0.2, 0.2);
-    pilot.material = greyMat;
+    const keyFrames = [];
+    keyFrames.push({
+      frame: 0,
+      value: 2,
+    });
 
-    const arm = MeshBuilder.CreateBox(
-      "arm",
-      { height: 0.75, width: 0.3, depth: 0.1875 },
-      this.scene
-    );
-    arm.material = greyMat;
-    arm.position.x = 0.125;
-    arm.parent = pilot;
-    // rotation order
-    // pilot.rotation.z = Math.PI / 2;
-    // pilot.rotation.x = Math.PI / 2;
-    pilot.rotation.y = Math.PI / 2;
+    keyFrames.push({
+      frame: frameRate,
+      value: -2,
+    });
+
+    keyFrames.push({
+      frame: 2 * frameRate,
+      value: 2,
+    });
+
+    xSlide.setKeys(keyFrames);
+    this.scene.beginDirectAnimation(box, [xSlide], 0, 2 * frameRate, true);
   }
 }
