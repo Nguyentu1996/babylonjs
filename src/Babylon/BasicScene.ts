@@ -1,18 +1,15 @@
 import {
-  Scene,
+  Axis,
+  Color3,
   Engine,
-  Vector3,
+  FreeCamera,
   HemisphericLight,
+  Mesh,
   MeshBuilder,
-  UniversalCamera,
+  Scene,
   StandardMaterial,
   Texture,
-  Mesh,
-  Color3,
-  TransformNode,
-  Color4,
-  Axis,
-  FreeCamera,
+  Vector3,
 } from "@babylonjs/core";
 
 export class BasicScene {
@@ -33,10 +30,9 @@ export class BasicScene {
     scene.ambientColor = new Color3(1, 1, 1);
     const framesPerSecond = 60;
     const earthGravity = -9.81;
-
     scene.gravity = new Vector3(0, earthGravity / framesPerSecond, 0);
     scene.collisionsEnabled = true;
-    const camera = new FreeCamera("camera", new Vector3(0, 2, 1), this.scene);
+    const camera = new FreeCamera("camera", new Vector3(0, 10, 1), this.scene);
 
     camera.minZ = 0;
     camera.speed = 0.25;
@@ -44,10 +40,12 @@ export class BasicScene {
 
     camera.applyGravity = true;
     camera.checkCollisions = true;
-    camera.keysDown.push(83);
-    camera.keysUp.push(87);
-    camera.keysLeft.push(65);
-    camera.keysRight.push(68);
+
+    // camera.keysDown.push(83);
+    // camera.keysUp.push(87);
+    // camera.keysLeft.push(65);
+    // camera.keysRight.push(68);
+
     camera.ellipsoid = new Vector3(1, 1, 1);
     camera.attachControl();
     const hemiLight = new HemisphericLight(
@@ -55,8 +53,6 @@ export class BasicScene {
       new Vector3(0, 1, 0),
       this.scene
     );
-    // hemiLight.diffuse = new Color3(15, 15, 15);
-    // hemiLight.intensity = 0.7;
     return scene;
   }
   createRoom() {
@@ -115,9 +111,9 @@ export class BasicScene {
       depth: 0.02,
     });
     const artMat = new StandardMaterial("artMat", this.scene);
-    // artMat.diffuseColor = Color3.Black();
-    artMat.emissiveColor = Color3.White();
-    // artMat.ambientColor = Color3.White();
+    artMat.diffuseColor = Color3.Black();
+    // artMat.emissiveColor = Color3.White();
+    // artMat.ambientColor = Color3.Black();
     art.material = artMat;
     const image = MeshBuilder.CreatePlane("img", { width: 1.325, height: 2 });
     const imgMat = new StandardMaterial("imgMat", this.scene);
