@@ -77,9 +77,18 @@ export class BasicScene {
   }
   buildWall(): void {
     const wallMat = new StandardMaterial("wallMat", this.scene);
-    const wallTexture = new Texture("./texture/Wall.jpg");
+    const wallTexture = new Texture(
+      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/beige_wall_001/beige_wall_001_diff_4k.jpg",
+      this.scene
+    );
+    const bumpTexture = new Texture(
+      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/beige_wall_001/beige_wall_001_nor_gl_4k.jpg",
+      this.scene
+    );
     wallMat.diffuseTexture = wallTexture;
-    wallMat.ambientColor = new Color3(15, 15, 15);
+    wallMat.bumpTexture = bumpTexture;
+
+    wallMat.ambientColor = new Color3(1, 1, 1);
     const wall = MeshBuilder.CreatePlane(
       "wall",
       { width: 20, height: 10 },
@@ -111,8 +120,8 @@ export class BasicScene {
       depth: 0.02,
     });
     const artMat = new StandardMaterial("artMat", this.scene);
-    artMat.diffuseColor = Color3.Black();
-    // artMat.emissiveColor = Color3.White();
+    // artMat.diffuseColor = Color3.Black();
+    artMat.emissiveColor = Color3.White();
     // artMat.ambientColor = Color3.Black();
     art.material = artMat;
     const image = MeshBuilder.CreatePlane("img", { width: 1.325, height: 2 });
