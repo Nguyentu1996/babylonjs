@@ -47,12 +47,46 @@ export default class BasicScene {
   }
 
   initBox() {
+    const texArray: Texture[] = [];
+
     const ground = MeshBuilder.CreateGround(
       "Ground",
       { width: 10, height: 10 },
       this.scene
     );
+    const groundMaterial = new StandardMaterial("groundMat", this.scene);
+    const diffTex = new Texture(
+      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/old_planks_02/old_planks_02_diff_4k.jpg",
+      this.scene
+    );
+    const bumpTex = new Texture(
+      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/old_planks_02/old_planks_02_nor_gl_4k.jpg",
+      this.scene
+    );
+    const specTex = new Texture(
+      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/old_planks_02/old_planks_02_spec_4k.jpg",
+      this.scene
+    );
+    const aoTex = new Texture(
+      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/old_planks_02/old_planks_02_ao_4k.jpg",
+      this.scene
+    );
+    groundMaterial.diffuseTexture = diffTex;
+    groundMaterial.bumpTexture = bumpTex;
+    groundMaterial.specularTexture = specTex;
+    groundMaterial.ambientTexture = aoTex;
 
+    ground.material = groundMaterial;
+
+    texArray.push(diffTex);
+    texArray.push(bumpTex);
+    texArray.push(specTex);
+    texArray.push(aoTex);
+
+    texArray.forEach((tex) => {
+      tex.uScale = 4;
+      // tex.vScale = 4;
+    });
     const ball = MeshBuilder.CreateSphere("Ball", { diameter: 1 }, this.scene);
     ball.position.y = 1;
     const standardMaterial = new StandardMaterial("material", this.scene);
