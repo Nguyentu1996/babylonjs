@@ -53,6 +53,7 @@ export class BasicScene {
       new Vector3(0, 1, 0),
       this.scene
     );
+    scene.debugLayer.show();
     return scene;
   }
   createRoom() {
@@ -77,18 +78,10 @@ export class BasicScene {
   }
   buildWall(): void {
     const wallMat = new StandardMaterial("wallMat", this.scene);
-    const wallTexture = new Texture(
-      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/beige_wall_001/beige_wall_001_diff_4k.jpg",
-      this.scene
-    );
-    const bumpTexture = new Texture(
-      "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/beige_wall_001/beige_wall_001_nor_gl_4k.jpg",
-      this.scene
-    );
+    const wallTexture = new Texture("./texture/Wall.jpg", this.scene);
     wallMat.diffuseTexture = wallTexture;
-    wallMat.bumpTexture = bumpTexture;
 
-    wallMat.ambientColor = new Color3(1, 1, 1);
+    wallMat.ambientColor = new Color3(15, 15, 15);
     const wall = MeshBuilder.CreatePlane(
       "wall",
       { width: 20, height: 10 },
